@@ -1,8 +1,6 @@
 package data;
 
 import com.github.javafaker.Faker;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Value;
 
 import java.time.LocalDate;
@@ -14,23 +12,25 @@ public class DataHelper {
     private DataHelper() {
     }
 
-    @Data
-    @AllArgsConstructor
-
-    public static class CardNumber {
+    @Value
+    public static class CardInfo {
         String cardNumber;
+        String month;
+        String year;
+        String owner;
+        String cvc;
     }
 
-
-    public static String approvedCardInfo() {
-        CardNumber cardNumber = new CardNumber("4444 4444 4444 4441", "APPROVED");
-        return cardNumber;
+    public static String approvedCardNumber() {
+        return "4444 4444 4444 4441";
     }
 
+    public static String declinedCardNumber() {
+        return "4444 4444 4444 4442";
+    }
 
-    public static String declinedCardInfo() {
-        CardNumber cardNumber = new CardNumber("4444 4444 4444 4442", "DECLINED");
-        return cardNumber;
+    public static String getInvalidCardNumberEmpty() {
+        return " ";
     }
 
     public static String getInvalidCardNumberLess() {
@@ -73,9 +73,14 @@ public class DataHelper {
         return year[rnd];
     }
 
-    public static String getInvalidLastYear() {
+    public static String getInvalidPastYear() {
         return LocalDate.now().minusYears(1).format(DateTimeFormatter.ofPattern("yy"));
     }
+
+    public static String getInvalidMoreYear() {
+        return LocalDate.now().plusYears(7).format(DateTimeFormatter.ofPattern("yy"));
+    }
+
 
     public static String getZeroYear() {
         return "00";
@@ -109,7 +114,7 @@ public class DataHelper {
 
     public static String getInvalidCvc4() {
         Faker faker = new Faker();
-        return faker.numerify("##");
+        return faker.numerify("####");
     }
 
     public static String getZeroCvc() {
