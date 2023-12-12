@@ -61,7 +61,7 @@ public class CardTest {
     public void shouldTestIncorrectCardNumberLess() {
         buyPage.putData(DataHelper.getInvalidCardNumberLess(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
         buyPage.wrongCardNumberNotificationWait();
-        Assertions.assertNull(SQLHelper.getStatusInData());
+        Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
     @Test
