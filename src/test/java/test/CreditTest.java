@@ -7,6 +7,7 @@ import page.CreditPage;
 import page.StartPage;
 import data.DataHelper;
 import data.SQLHelper;
+
 import static com.codeborne.selenide.Selenide.*;
 import static data.SQLHelper.cleanDatabase;
 
@@ -59,7 +60,7 @@ public class CreditTest {
     @DisplayName("Card Number is incorrect less than digits")
     public void shouldTestIncorrectCardNumberLessCreditForm() {
         creditPage.putData(DataHelper.getInvalidCardNumberLess(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        creditPage.wrongCardNumberNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -67,7 +68,7 @@ public class CreditTest {
     @DisplayName("Month value is a single digit numeric value")
     public void shouldTestMonthSingleDigitNumericValueCreditForm() {
         creditPage.putData(DataHelper.approvedCardNumber(), DataHelper.getInvalidMonthOneNumber(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        creditPage.wrongMonthNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -107,7 +108,7 @@ public class CreditTest {
     @DisplayName("Year value is a single digit numeric value")
     public void shouldTestYearSingleDigitNumericValueCreditForm() {
         creditPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getInvalidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        creditPage.wrongYearNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -123,7 +124,7 @@ public class CreditTest {
     @DisplayName("Owner value contains Cyrillic")
     public void shouldTestOwnerWithCyrillicCreditForm() {
         creditPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getInvalidOwnerCyrillic(), DataHelper.getValidCvc());
-        creditPage.incorrectFormatOwnerNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -131,7 +132,7 @@ public class CreditTest {
     @DisplayName("Owner value is symbols")
     public void shouldTestOwnerValueASymbolsCreditForm() {
         creditPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getInvalidOwnerSymbols(), DataHelper.getValidCvc());
-        creditPage.incorrectFormatOwnerNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -139,7 +140,7 @@ public class CreditTest {
     @DisplayName("Owner value contains 1 letter")
     public void shouldTestOwnerWithOneLetterCreditForm() {
         creditPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), "N", DataHelper.getValidCvc());
-        creditPage.incorrectFormatOwnerNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -147,7 +148,7 @@ public class CreditTest {
     @DisplayName("CVC value is two digit numbre")
     public void shouldTestCvcAsTwoDigitNumberCreditForm() {
         creditPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getInvalidCvc2());
-        creditPage.wrongFormatCVVNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -155,7 +156,7 @@ public class CreditTest {
     @DisplayName("CVC value is 00")
     public void shouldTestCVCNumber00CreditForm() {
         creditPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getZeroCvc());
-        creditPage.wrongFormatCVVNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -163,7 +164,7 @@ public class CreditTest {
     @DisplayName("CardNumber value is empty")
     public void shouldTestCardNumberIsEmptyCreditForm() {
         creditPage.putData(DataHelper.getInvalidCardNumberEmpty(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        creditPage.wrongCardNumberNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -171,7 +172,7 @@ public class CreditTest {
     @DisplayName("Month value is empty")
     public void shouldTestMonthIsEmptyCreditForm() {
         creditPage.putData(DataHelper.approvedCardNumber(), "", DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        creditPage.wrongMonthNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -179,7 +180,7 @@ public class CreditTest {
     @DisplayName("Year value is empty")
     public void shouldTestYearIsEmptyCreditForm() {
         creditPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), "", DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        creditPage.wrongYearNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -195,7 +196,7 @@ public class CreditTest {
     @DisplayName("CVC value is empty")
     public void shouldTestCVCIsEmptyCreditForm() {
         creditPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), "");
-        creditPage.wrongFormatCVVNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -203,11 +204,11 @@ public class CreditTest {
     @DisplayName("Test empty form")
     public void shouldTestEmptyCreditForm() {
         creditPage.putData("", "", "", "", "");
-        creditPage.wrongCardNumberNotificationWait();
-        creditPage.wrongMonthNotificationWait();
-        creditPage.wrongYearNotificationWait();
+        creditPage.wrongFormatNotificationWait();
+        creditPage.wrongFormatNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         creditPage.ownerEmptyNotificationWait();
-        creditPage.wrongFormatCVVNotificationWait();
+        creditPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 }

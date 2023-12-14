@@ -60,7 +60,7 @@ public class CardTest {
     @DisplayName("Card Number is incorrect less than digits")
     public void shouldTestIncorrectCardNumberLess() {
         buyPage.putData(DataHelper.getInvalidCardNumberLess(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        buyPage.wrongCardNumberNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -68,7 +68,7 @@ public class CardTest {
     @DisplayName("Month value is a single digit numeric value")
     public void shouldTestMonthSingleDigitNumericValue() {
         buyPage.putData(DataHelper.approvedCardNumber(), DataHelper.getInvalidMonthOneNumber(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        buyPage.wrongMonthNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -108,7 +108,7 @@ public class CardTest {
     @DisplayName("Year value is a single digit numeric value")
     public void shouldTestYearSingleDigitNumericValue() {
         buyPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getInvalidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        buyPage.wrongYearNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -124,7 +124,7 @@ public class CardTest {
     @DisplayName("Owner value contains Cyrillic")
     public void shouldTestOwnerWithCyrillic() {
         buyPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getInvalidOwnerCyrillic(), DataHelper.getValidCvc());
-        buyPage.incorrectFormatOwnerNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -133,7 +133,7 @@ public class CardTest {
     @DisplayName("Owner value is symbols")
     public void shouldTestOwnerValueASymbols() {
         buyPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getInvalidOwnerSymbols(), DataHelper.getValidCvc());
-        buyPage.incorrectFormatOwnerNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -142,7 +142,7 @@ public class CardTest {
     @DisplayName("Owner value contains 1 letter")
     public void shouldTestOwnerWithOneLetter() {
         buyPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), "N", DataHelper.getValidCvc());
-        buyPage.incorrectFormatOwnerNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -151,7 +151,7 @@ public class CardTest {
     @DisplayName("CVC value is two digit number")
     public void shouldTestCvcAsTwoDigitNumber() {
         buyPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getInvalidCvc2());
-        buyPage.wrongFormatCVVNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -160,7 +160,7 @@ public class CardTest {
     @DisplayName("CVC value is 00")
     public void shouldTestCVCNumber00() {
         buyPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getZeroCvc());
-        buyPage.wrongFormatCVVNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -169,7 +169,7 @@ public class CardTest {
     @DisplayName("CardNumber value is empty")
     public void shouldTestCardNumberIsEmpty() {
         buyPage.putData(DataHelper.getInvalidCardNumberEmpty(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        buyPage.wrongCardNumberNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -178,7 +178,7 @@ public class CardTest {
     @DisplayName("Month value is empty")
     public void shouldTestMonthIsEmpty() {
         buyPage.putData(DataHelper.approvedCardNumber(), "", DataHelper.getValidYear(), DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        buyPage.wrongMonthNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -187,7 +187,7 @@ public class CardTest {
     @DisplayName("Year value is empty")
     public void shouldTestYearIsEmpty() {
         buyPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), "", DataHelper.getValidOwner(), DataHelper.getValidCvc());
-        buyPage.wrongYearNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -204,7 +204,7 @@ public class CardTest {
     @DisplayName("CVC value is empty")
     public void shouldTestCVCIsEmpty() {
         buyPage.putData(DataHelper.approvedCardNumber(), DataHelper.getValidMonth(), DataHelper.getValidYear(), DataHelper.getValidOwner(), "");
-        buyPage.wrongFormatCVVNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 
@@ -212,11 +212,11 @@ public class CardTest {
     @DisplayName("Test empty form")
     public void shouldTestEmptyForm() {
         buyPage.putData("", "", "", "", "");
-        buyPage.wrongCardNumberNotificationWait();
-        buyPage.wrongMonthNotificationWait();
-        buyPage.wrongYearNotificationWait();
+        buyPage.wrongFormatNotificationWait();
+        buyPage.wrongFormatNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         buyPage.ownerEmptyNotificationWait();
-        buyPage.wrongFormatCVVNotificationWait();
+        buyPage.wrongFormatNotificationWait();
         Assertions.assertNull(SQLHelper.getStatusForCreditForm());
     }
 }
